@@ -1,16 +1,6 @@
 # Fintech Wallet
 
-[![CI](https://github.com/flemuh/fintech-wallet-pleno/actions/workflows/ci.yml/badge.svg)](https://github.com/flemuh/fintech-wallet-pleno/actions/workflows/ci.yml)
-
 Carteira digital pessoal com depósitos, saques e histórico de transações. API em Laravel 13 com Sanctum e SPA em Vue 3.
-
-| | |
-|---|---|
-| **Aplicação no ar** | https://wallet.speedlora.app |
-| **Repositório** | https://github.com/flemuh/fintech-wallet-pleno |
-| **Usuário de teste** | `demo@wallet.speedlora.app` / `Demo@12345` |
-
-O usuário de teste já tem saldo e movimentações dos últimos 30 dias. Para criar outra conta, use o link **Criar conta** na tela de login; a senha precisa de 8 a 64 caracteres, com maiúscula, minúscula, número e símbolo.
 
 ## Sumário
 
@@ -34,7 +24,7 @@ O usuário de teste já tem saldo e movimentações dos últimos 30 dias. Para c
 - **Interface:** formulários com feedback de sucesso e erro, bloqueio do saque acima do saldo na própria tela e extrato com filtros e paginação guardados na URL.
 
 ```
-fintech-wallet-pleno/
+fintech-wallet/
 ├── backend/              Laravel 13 (API)
 ├── frontend/             Vue 3 (SPA)
 ├── docker/               imagens de desenvolvimento e produção
@@ -161,8 +151,8 @@ No Linux e no WSL, os containers rodam com o usuário `1000:1000`. Se o seu usu�
 **1. Clonar e configurar o `.env`**
 
 ```bash
-git clone https://github.com/flemuh/fintech-wallet-pleno.git
-cd fintech-wallet-pleno
+git clone https://github.com/flemuh/fintech-wallet.git
+cd fintech-wallet
 cp backend/.env.example backend/.env
 ```
 
@@ -223,7 +213,7 @@ Com PHP 8.4, Composer 2, Node 24 e PostgreSQL 16 instalados: crie os bancos `wal
 
 ## Deploy e CI/CD
 
-A aplicação roda em uma VPS própria com Docker Compose: um container Nginx com o Vue já compilado (que repassa `/api`), um com PHP-FPM e Laravel e um com PostgreSQL, atrás do Nginx do host, que cuida do HTTPS.
+A aplicação foi preparada para rodar em uma VPS própria com Docker Compose: um container Nginx com o Vue já compilado (que repassa `/api`), um com PHP-FPM e Laravel e um com PostgreSQL, atrás do Nginx do host, que cuida do HTTPS.
 
 Todo push passa pelo GitHub Actions: auditoria de dependências, Pint, Larastan e PHPUnit em PostgreSQL no backend; formatação, lint, tipos, Vitest e build no frontend. Na `main`, o deploy só começa com os dois jobs verdes **e** aprovação manual no ambiente `production`. O script de deploy reconstrói as imagens, sobe os containers, roda as migrations e só termina com sucesso quando `/api/health` responde.
 
